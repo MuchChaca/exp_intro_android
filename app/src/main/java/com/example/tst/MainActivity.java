@@ -1,18 +1,24 @@
 package com.example.tst;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     static final float LUX_THRESHOLD = 2000f;
     static final float TEMP_THRESHOLD = 28f;
 
+    private static final int PERM_SMS = 1 << 5;
+
     static float temperature = 0f;
 
 
@@ -75,6 +83,31 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mLight = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 
         mTemp = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
+
+        // Check Send SMS permissions
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            // request code : know from where the request comes from, created by the dev
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, this.PERM_SMS);
+        }
+
+        Intent i;
+        i = new Intent(this, LocationActivity.class);
+        startActivity(i);
+
+
+//        SmsManager smsManager = SmsManager.getDefault();
+//        String msg = "some txt";
+//        smsManager.sendTextMessage("+2693000000", null, "some txt", null, null);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == this.PERM_SMS) {
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage("+2693000000", null, "some txt", null, null);
+            }
+        }
     }
 
     @Override
