@@ -4,4 +4,6 @@
     <string name="title_activity_test">TestActivity</string>
     <string name="title_activity_sensor">SensorActivity</string>
     <string name="title_activity_location">LocationActivity</string>
+    <string name="title_activity_tts">TTSActivity</string>
+    <string name="title_activity_stt">STTActivity</string>
 </resources>

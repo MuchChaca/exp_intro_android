@@ -2,12 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tst">
 
-    <uses-permission android:name="android.permission.SEND_SMS" />
-
-    <!-- LOCATION -->
+    <uses-permission android:name="android.permission.SEND_SMS" /> <!-- LOCATION -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -17,9 +16,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".STTActivity"
+            android:label="@string/title_activity_stt"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".TTSActivity"
+            android:label="@string/title_activity_tts"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".LocationActivity"
             android:label="@string/title_activity_location"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SensorActivity"
             android:label="@string/title_activity_sensor"
